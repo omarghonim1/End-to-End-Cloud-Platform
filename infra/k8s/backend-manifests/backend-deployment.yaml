@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: backend
+  labels:
+    app: backend
+  namespace: devops-project
+spec:
+  replicas: 1
+
+  revisionHistoryLimit: 3
+
+  selector:
+    matchLabels:
+      app: backend
+
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+
+  template:
+    metadata:
+      labels:
+        app: backend
+
+    spec:
+      automountServiceAccountToken: false
+      serviceAccountName: backend-sa
+
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+
+      containers:
+        - name: backend
+          image: me-central1-docker.pkg.dev/devops-gke-project-510307/devops-repo/devops-backend:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+              
+          envFrom:
+            - secretRef:
+                name: backend-secret
+
+            - configMapRef:
+                name: backend-config
+
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "250m"
+              memory: "256Mi"
+
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 20
+            timeoutSeconds: 2
+            failureThreshold: 3
+
+          terminationMessagePolicy: File

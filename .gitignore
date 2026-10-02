@@ -1,0 +1,18 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+terraform.tfvars
+
+# Node.js
+node_modules/
+
+# OS
+.DS_Store
+
+# Kubernetes secrets
+**/secret.yaml
+
+# Terraform provider binaries
+**/linux_amd64/
+**/terraform-provider-*
