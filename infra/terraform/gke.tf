@@ -8,6 +8,10 @@ resource "google_container_cluster" "devops_gke" {
   remove_default_node_pool = true
   initial_node_count       = 1
 
+  secret_manager_config {
+    enabled = true
+  }
+
   ip_allocation_policy {
     cluster_secondary_range_name  = "pods-range"
     services_secondary_range_name = "services-range"
