@@ -41,11 +41,11 @@ spec:
 
           resources:
             requests:
-              cpu: 20m
-              memory: 64Mi
+              cpu: 50m
+              memory: "128Mi"
             limits:
-              cpu: 100m
-              memory: 128Mi
+              cpu: 200m
+              memory: 512Mi
           readinessProbe:
             initialDelaySeconds: 30
             periodSeconds: 10
