@@ -16,6 +16,14 @@ app.get("/health", (req, res) => {
   });
 });
 
+app.get('/api/test', (req, res) => {
+  res.json({
+    service: 'test-service',
+    status: 'passed',
+    message: 'CI/CD deployment is working 🚀'
+  });
+});
+
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
 });

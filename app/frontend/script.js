@@ -10,3 +10,18 @@ document.querySelectorAll(".nav-links a").forEach((link) => {
         navLinks.classList.remove("active");
     });
 });
+
+async function checkTestService() {
+  const status = document.getElementById("test-status");
+
+  try {
+    const response = await fetch("/api/test");
+    const data = await response.json();
+
+    status.textContent = `${data.message} — ${data.status.toUpperCase()}`;
+  } catch (error) {
+    status.textContent = "Test service unavailable";
+  }
+}
+
+checkTestService();
