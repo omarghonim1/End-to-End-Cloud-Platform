@@ -7,7 +7,7 @@ resource "google_container_node_pool" "devops_nodes" {
   node_count = 1
 
   node_config {
-    machine_type    = "e2-medium"
+    machine_type    = "e2-standard-4"
     disk_size_gb    = 30
     disk_type       = "pd-balanced"
     image_type      = "COS_CONTAINERD"
