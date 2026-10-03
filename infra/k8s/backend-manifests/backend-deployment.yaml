@@ -40,7 +40,7 @@ spec:
 
       containers:
         - name: backend
-          image: me-central1-docker.pkg.dev/devops-gke-project-510307/devops-repo/devops-backend:07d818acad629f6f3b1b8827ee20f310ff1e0c71
+          image: me-central1-docker.pkg.dev/devops-gke-project-510307/devops-repo/devops-backend:01e29c4830cc2a374a5ff1221e923f588c5383c7
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
