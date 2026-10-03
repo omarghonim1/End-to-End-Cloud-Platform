@@ -36,6 +36,13 @@ spec:
 
       containers:
         - name: frontend
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
 
           image: me-central1-docker.pkg.dev/devops-gke-project-510307/devops-repo/devops-frontend:2.0
           imagePullPolicy: IfNotPresent
