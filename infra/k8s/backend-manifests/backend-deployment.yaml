@@ -30,6 +30,10 @@ spec:
       automountServiceAccountToken: false
       serviceAccountName: backend-sa
 
+      nodeSelector:
+        iam.gke.io/gke-metadata-server-enabled: "true"
+
+
       securityContext:
         seccompProfile:
           type: RuntimeDefault
@@ -44,9 +48,6 @@ spec:
               protocol: TCP
               
           envFrom:
-            - secretRef:
-                name: backend-secret
-
             - configMapRef:
                 name: backend-config
 
@@ -85,3 +86,16 @@ spec:
             failureThreshold: 3
 
           terminationMessagePolicy: File
+
+          volumeMounts:
+            - name: secrets-volume
+              mountPath: /var/secrets
+              readOnly: true
+
+      volumes:
+        - name: secrets-volume
+          csi:
+            driver: secrets-store-gke.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: backend-secrets
