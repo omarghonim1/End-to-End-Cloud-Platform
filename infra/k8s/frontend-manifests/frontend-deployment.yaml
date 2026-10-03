@@ -44,7 +44,7 @@ spec:
               drop:
                 - ALL
 
-          image: me-central1-docker.pkg.dev/devops-gke-project-510307/devops-repo/devops-frontend:2.0
+          image: me-central1-docker.pkg.dev/devops-gke-project-510307/devops-repo/devops-frontend:07d818acad629f6f3b1b8827ee20f310ff1e0c71
           imagePullPolicy: IfNotPresent
 
           ports:
