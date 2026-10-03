@@ -48,6 +48,16 @@ jobs:
             -t $REGION-docker.pkg.dev/$PROJECT_ID/$GAR_REPOSITORY/devops-backend:$IMAGE_TAG \
             ./app/backend
 
+      - name: Scan Backend Image
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_REPOSITORY }}/devops-backend:${{ env.IMAGE_TAG }}
+          format: table
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: os,library
+          severity: CRITICAL,HIGH
+
       - name: Push Backend
         run: |
           docker push \
@@ -58,6 +68,16 @@ jobs:
           docker build \
             -t $REGION-docker.pkg.dev/$PROJECT_ID/$GAR_REPOSITORY/devops-frontend:$IMAGE_TAG \
             ./app/frontend
+
+      - name: Scan Frontend Image
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_REPOSITORY }}/devops-frontend:${{ env.IMAGE_TAG }}
+          format: table
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: os,library
+          severity: CRITICAL,HIGH
 
       - name: Push Frontend
         run: |
