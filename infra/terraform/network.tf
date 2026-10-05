@@ -3,7 +3,7 @@ resource "google_compute_network" "devops_vpc" {
   auto_create_subnetworks = false
 
   depends_on = [
-    google_project_service.compute_api
+    google_project_service.compute_api ## Mandatory
   ]
 
 }
